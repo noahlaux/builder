@@ -1,0 +1,29 @@
+{
+	"layout": "default",
+	"items": [
+		{
+			"type": "heading",
+			"el": ".placeholder:eq(0)",
+			"text": "Hello world",
+			"show": true
+		},
+		{
+		    "type": "imageList",
+		    "el": ".placeholder:eq(0)",
+		    "search": "Goat",
+		    "title": "Finding the goats",
+		    "itemsPrRow": 1,
+		    "itemsPrPage": 1,
+		    "showCaptions": false,
+		    "showPagination": false
+		},
+		{
+		    "type": "imageList",
+		    "el": ".placeholder:eq(1)",
+		    "search": "Moon",
+		    "title": "Man on the moon",
+		   	"itemsPrRow": 3,
+		    "itemsPrPage": 9
+		}
+	]
+}

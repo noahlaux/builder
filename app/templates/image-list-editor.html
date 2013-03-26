@@ -1,0 +1,53 @@
+<div class="editor-module">
+
+    <form class="well">
+
+        <fieldset class="editor">
+
+            <legend>Visibility</legend>
+
+            <label class="checkbox">
+                <input type="checkbox" data-bind="checked: showTitle">Show title
+            </label>
+
+            <label class="checkbox">
+                <input type="checkbox" data-bind="checked: showImageList">Show image list
+            </label>
+
+            <label class="checkbox">
+                <input type="checkbox" data-bind="checked: showCaptions">Show thumbnail captions
+            </label>
+
+             <label class="checkbox">
+                <input type="checkbox" data-bind="checked: showPagination">Show pagination
+            </label>
+        </fieldset>
+
+        <fieldset class="editor">
+
+            <legend>Image list</legend>
+
+            <label>Service provider</label>
+            <select data-bind="options: imageServices.options, value: imageServices.options.selected"></select>
+
+            <label>Search for text</label>
+            <div class="input-append controls controls-row">
+                <input class="span2" type="text" placeholder="Search for something" data-bind="value: search">
+                <button class="btn" type="button">Go!</button>
+            </div>
+            <!-- <span class="help-block">Example block-level help text here.</span> -->
+
+            <label>Results per page</label>
+            <select data-bind="options: itemsPrPageOptions, value: itemsPrPage"></select>
+
+            <label>Images per row</label>
+            <div class="controls controls-row">
+                <input class="span1 tiny" type="text" data-bind="value: itemsPrRow" />
+                <input class="span2" type="range" min="1" max="7" step="1" data-bind="value: itemsPrRow" />
+            </div>
+            <!-- <span class="help-block">Example block-level help text here.</span> -->
+        </fieldset>
+
+    </form>
+
+</div>
