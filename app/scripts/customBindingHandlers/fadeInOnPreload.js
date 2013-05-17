@@ -28,13 +28,17 @@ define([
                                 return item.imageUrl;
                             });
 
+            $element.parent().height( $element.outerHeight( true ) );
+
             $element.hide();
 
             viewModel.isFetching( true );
 
             preloadImages( images, function() {
                 viewModel.isFetching( false );
-                $element.fadeIn('slow');
+                $element.fadeIn( 'slow', function() {
+                    $element.parent().height( 'auto' );
+                });
             });
 
         }

@@ -3,13 +3,13 @@
 	"items": [
 		{
 			"type": "heading",
-			"el": ".placeholder:eq(0)",
+			"el": ".placeholder:eq(1)",
 			"text": "Hello world",
 			"show": true
 		},
 		{
 		    "type": "imageList",
-		    "el": ".placeholder:eq(0)",
+		    "el": ".placeholder:eq(1)",
 		    "search": "Goat",
 		    "title": "Finding the goats",
 		    "itemsPrRow": 1,
@@ -24,6 +24,38 @@
 		    "title": "Man on the moon",
 		   	"itemsPrRow": 3,
 		    "itemsPrPage": 9
+		},
+		{
+		    "type": "imageList",
+		    "el": ".placeholder:eq(2)",
+		    "search": "Dosis",
+		    "title": "Dosis",
+		   	"itemsPrRow": 3,
+		    "itemsPrPage": 3,
+		    "showTitle": false,
+		    "showPagination": false
+		},
+		{
+		    "type": "imageList",
+		    "el": ".placeholder:eq(2)",
+		    "search": "Swine",
+		    "title": "Yes",
+		   	"itemsPrRow": 3,
+		    "itemsPrPage": 3,
+		    "showTitle": false,
+		    "showPagination": false,
+		    "showCaptions": false
+		},
+		{
+		    "type": "imageList",
+		    "el": ".placeholder:eq(2)",
+		    "search": "Bingo",
+		    "title": "Double module",
+		   	"itemsPrRow": 4,
+		    "itemsPrPage": 8,
+		    "showTitle": true,
+		    "showPagination": false,
+		   	"showCaptions": false
 		}
 	]
 }

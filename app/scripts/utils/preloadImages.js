@@ -1,3 +1,11 @@
+/**
+ * Module to preload images
+ * TODO remake with deffered pattern
+ *
+ * @author Noah Laux (noahlaux@gmail.com)
+ * @version 0.1
+ */
+
 /*global define*/
 define([
     'jquery'

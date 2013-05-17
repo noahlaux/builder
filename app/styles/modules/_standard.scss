@@ -1,0 +1,284 @@
+.app {
+	padding: 10px;
+}
+
+.content {
+	.placeholder {
+		//border: 1px dashed red;
+		&.no-bounding-box {
+			border: none;
+		}
+
+		&.drag-over {
+			@include transform(#{scale(1) !important});
+			border: 2px solid green !important;
+			@include border-radius(3px);
+		}
+
+		&.drag-out {
+
+		}
+
+		&.bounding-placeholder {
+			border: 1px dashed green;
+			@include transform(scale(0.95));
+			//@include box-shadow(-1px 2px 10px 0px rgba(0, 0, 0, 0.3));
+		}
+	}
+}
+
+[draggable] {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+[draggable=true] {
+	-khtml-user-drag: element;
+	cursor: move;
+}
+/**
+ * Module image-list
+ */
+
+
+// .content {
+// 	position: absolute;
+// 	top: 0;
+// 	bottom: 0;
+// 	overflow: auto;
+// }
+
+// .editors {
+// 	position: relative;
+// 	overflow: hidden;
+// 	position: absolute;
+// 	right: $fluidGridGutterWidth / 2;
+// 	bottom: 0;
+// 	top: 0;
+// 	> .wrapper {
+// 		position: absolute;
+// 		top: 0;
+// 		left: 0;
+// 		right: 0;
+// 		bottom: 0;
+// 		overflow: auto;
+// 	}
+// }
+//
+.layout {
+	@include backface-visibility(hidden);
+	&.dragging {
+
+		@include transform(scale(0.6));
+		.module {
+			border: 5px solid brown;
+			margin: 10px;
+			padding: 5px;
+			@include opacity(0.2);
+			.edit-button {
+				display: none;
+			}
+		}
+	}
+}
+
+
+.item {
+
+	position: relative;
+	margin-left: 0 !important;
+	margin-right: $fluidGridGutterWidth;
+	@include box-shadow(-1px 2px 10px 0px rgba(0, 0, 0, 0.3));
+
+	&.last {
+		margin-right: 0;
+	}
+
+	img {
+		width: 100%;
+	}
+
+	h3 {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: 0 5px 5px 5px;
+		font-size: .8em;
+		background-color: rgba( 0, 0, 0, 0.5);
+		color: white;
+		padding: 3px 10px;
+		line-height: 1.5em;
+		height: 3em;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		font-family: consolas;
+	}
+
+}
+
+.editor-module {
+
+	position: absolute;
+	margin-left: 6px;
+	margin-top: 6px;
+	@include box-shadow(-1px 2px 10px 0px rgba(0, 0, 0, 0.3));
+	@include opacity(0.978);
+
+	// TODO should not be there!
+	select {
+		color: #52575c;
+	}
+
+	display: none;
+
+	input.tiny {
+		width: 20px;
+	}
+
+	form {
+		margin: 0;
+		height: 400px;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+
+	.editor {
+		width: 100%;
+	}
+}
+
+.module * {
+	-webkit-user-drag: none;
+}
+
+.clone-wrapper {
+	@include opacity(1);
+	@include transform(scale(0.5));
+	//@include border-radius(3px);
+	//background-color: #333;
+	//padding: 20px;
+	//border: 2px solid #000;
+	@include box-shadow(-1px 2px 50px 0px rgba(0, 0, 0, 0.4));
+}
+
+.module {
+	//background-color: transparent;
+	-webkit-user-drag: element;
+
+	&.clone {
+		.edit-button {
+			display: none;
+		}
+	}
+
+	&.drag-over {
+		// &.top {
+		// 	margin-top: 30px !important;
+		// }
+	}
+
+	&.cloned {
+		opacity: 1 !important;
+		@include transform(scale(1));
+	}
+
+	.edit-button {
+		@include opacity(0);
+		//display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 1;
+	}
+
+	&.editing {
+		.edit-button {
+			@include opacity(1);
+		}
+	}
+
+	&:hover {
+		.edit-button {
+			@include opacity(1);
+			//display: block;
+		}
+	}
+
+ 	&.image-list {
+
+		position: relative;
+		list-style: none;
+		margin: 0;
+
+		hr {
+			margin: 0;
+		}
+
+		nav {
+			position: relative;
+			margin: 10px;
+			overflow: hidden;
+			.next {
+				float: right;
+			}
+		}
+
+		.items {
+			position: relative;
+			margin-top: 10px;
+		}
+
+		h1 {
+			position: relative;
+		}
+
+		.loader {
+			position: absolute;
+			right: 0;
+			z-index: 100;
+			margin-top: -15px;
+			margin-right: 5px;
+		}
+	}
+}
+
+.dragGhostContainer {
+	// position: absolute;
+	// top:-50px;
+	// left: -1000px;
+	// visibility: hidden;
+	display: none;
+}
+
+input.builder-editor-field {
+	padding: 0;
+	margin: 0;
+	margin-top: 3px;
+	margin-left: -2px;
+	width: 100%;
+}
+
+.loader {
+	background-image: url('../../img/ajax-loader.gif');
+	width: 15px;
+	height: 11px;
+	display: inline-block;
+}
+
+.easein {
+  @include transition-duration(300ms);
+  @include transition-timing-function(ease-in-out);
+}
+
+.easeinout {
+  @include transition-duration(300ms);
+  @include transition-timing-function(ease-in-out);
+}
+
+.easeinout-quick {
+  @include transition-duration(200ms);
+  @include transition-timing-function(ease-in-out);
+}

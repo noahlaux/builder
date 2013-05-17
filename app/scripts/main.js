@@ -26,12 +26,10 @@ require([
     'bootstrap',
     'utils/stringTemplates'
 
-], function (app, $) {
+], function ( app, $ ) {
 
     'use strict';
-    // use app here
-    console.log(app);
+
     app.init();
-    console.log('Running jQuery %s', $().jquery);
 
 });

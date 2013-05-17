@@ -17,8 +17,11 @@ define([
 	'use strict';
 
     var extend = function( protoProps, staticProps ) {
-        var parent = this;
-        var child = function(){ return parent.apply(this, arguments); };
+
+        var parent  = this,
+            child   = function(){
+                return parent.apply(this, arguments);
+            };
 
         _.extend( child, parent, staticProps );
 
@@ -37,6 +40,9 @@ define([
     };
 
 	var Module = function( attributes, options ) {
+        this.app = options.app;
+
+        this.$el = $( attributes.el );
         this.initialize.apply( this, arguments );
     };
 
@@ -68,16 +74,76 @@ define([
          */
         render: function() {
 
-            if ( this.data.el() ) {
+            if ( this.$el ) {
 
-                var $element    = $( this.data.el() ).eq( 0 ),
+                var $element    = this.$el.eq( 0 ),
                     $module     = $( this.template );
 
                 $element.append( $module );
 
-                ko.applyBindings( this.data, $module[0] );
+                ko.applyBindings( this.data, $module[ 0 ] );
             }
 
+            if ( this.afterRender ) {
+                this.afterRender();
+            }
+
+        },
+
+        afterRender: function() {
+
+            var self = this;
+
+            // Make modules draggable
+            this.$el.find( '.module' )
+                .attr( 'draggable', true )
+                .on({
+                    'dragstart': function( e ) {
+
+                        //originalEvent.dataTransfer.setData( 'data', JSON.stringify( e.currentTarget ) );
+                        // originalEvent.dataTransfer.setData('text/builder', originalEvent.target.dataset.value);
+                        // originalEvent.dataTransfer.effectAllowed = 'move'; // only allow moves
+                        // originalEvent.dataTransfer.items.add(e);
+
+                        e.dataTransfer.setData('text/html', e.currentTarget.innerHTML);
+                        e.dataTransfer.setData('Text', 'Text' );
+
+                        var $element            = $( this ),
+                            $clone              = $element.clone().addClass( 'clone' ),
+                            $placeHolderClone   = $element.parent().parent().clone().addClass( 'well clone-wrapper' );
+
+                        $placeHolderClone
+                            .html( $clone )
+                            .css({
+                                width: $element.width(),
+                                height: $element.height()
+                            });
+
+                        $('.dragGhostContainer').html( $placeHolderClone ).show();
+
+                        var x = $placeHolderClone.width() / 3.2,
+                            y = $placeHolderClone.height() / 3;
+
+                        e.dataTransfer.setDragImage( $placeHolderClone[0], x, y );
+                        // originalEvent.dataTransfer.addElement( this );
+
+                        self.app.dragged = {
+                            originalEvent: e,
+                            viewModel: self
+                        };
+
+                        self.app.isDragging( true );
+
+                        // Apply style to original object
+                        $( this ).addClass( 'cloned easeinout-quick' );
+
+                        return true;
+                    },
+                    'drag': function() {
+                        // TODO really bad solution
+                        $('.dragGhostContainer').hide();
+                    }
+                });
         }
     });
 

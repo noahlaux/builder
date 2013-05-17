@@ -1,27 +1,58 @@
 <div class="module image-list" data-bind="imageListEditor: items">
 
-	<!-- heading -->
-	<h1 data-bind="visible: showTitle, html: title, textEditor: 'title'"></h1>
+	<!-- header -->
+	<header data-bind="visible: showTitle">
 
-	<!-- loading indicator -->
-	<span class="loader" data-bind="visible: isFetching"></span>
+		<h1 data-bind="html: title, contentEditable: title"></h1>
 
-	<hr />
+		<!-- loading indicator -->
+		<span class="loader" data-bind="visible: isFetching"></span>
+
+		<hr />
+
+	</header>
 
 	<!-- navigation -->
-	<nav data-bind="visible: showPagination">
+	<!-- <nav data-bind="visible: showPagination"> -->
+
+	<!-- <ul data-bind="visible: showPagination" class="pager">
+
+	 	<li class="previous" data-bind="css: { disabled: currentPage() < 2}">
+	    	<a href="#" data-bind="click: previousPage, enable: currentPage() > 1">&larr; Previous</a>
+	  	</li>
+
+	  	<li class="next" data-bind="click: nextPage">
+	    	<a href="#">Next &rarr;</a>
+	  	</li>
+
+	</ul> -->
+
+	<div data-bind="visible: showPagination" class="pagination pagination-mini pagination-centered">
+	 	<ul data-bind="makePaginationBullets: currentPage()">
+
+		    <!-- previous button -->
+		    <li data-bind="css: { disabled: currentPage() < 2}">
+		    	<a href="#" data-bind="click: previousPage, enable: currentPage() > 1">Prev</a>
+		    </li>
+
+			<!-- next button -->
+		    <li>
+		    	<a href="#" data-bind="click: nextPage">Next</a>
+		    </li>
+	  	</ul>
+	</div>
 
 		<!-- previous -->
-		<a href="#" class="btn btn-mini previous" data-bind="click: previousPage, enable: currentPage() > 1, css: { disabled: currentPage() < 2}">
+		<!-- <a href="#" class="btn btn-mini previous" data-bind="click: previousPage, enable: currentPage() > 1, css: { disabled: currentPage() < 2}">
 			<i class="icon-chevron-left"></i> Previous
 		</a>
-
+ -->
 		<!-- next -->
-		<a href="#" class="btn btn-mini next" data-bind="click: nextPage">
+		<!-- <a href="#" class="btn btn-mini next" data-bind="click: nextPage">
 			Next <i class="icon-chevron-right"></i>
 		</a>
 
-	</nav>
+	</nav> -->
 
 	<!-- image list -->
 	<div data-bind="visible: showImageList" class="items">

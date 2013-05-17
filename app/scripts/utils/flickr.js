@@ -76,8 +76,10 @@ define([
         },
 
         /**
-         * [fetch description]
-         * @return {[type]} [description]
+         * Fetch data
+         *
+         * @param {Object} options
+         * @return {Object} deffered
          */
         fetch: function( options ) {
 
@@ -85,14 +87,16 @@ define([
                 url: this.url + '?jsoncallback=?',
                 data: options,
                 dataType: 'json'
-            });
+            }).promise();
 
         },
 
         /**
-         * [serialize description]
+         * Serialize data
          *
-         * @return {[type]} [description]
+         * @param  {[type]} data [description]
+         * @param  {String} size Flickr image sizes
+         * @return {Array} Photos
          */
         serialize: function( data, size ) {
 
