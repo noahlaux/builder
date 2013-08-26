@@ -129,14 +129,20 @@
 	margin-left: 6px;
 	margin-top: 6px;
 	@include box-shadow(-1px 2px 10px 0px rgba(0, 0, 0, 0.3));
-	@include opacity(0.978);
-
+	//@include opacity(0.978);
+    @include opacity(0);
 	// TODO should not be there!
 	select {
 		color: #52575c;
 	}
 
-	display: none;
+    @include transition(opacity 200ms);
+
+	// display: none;
+
+    &.editing {
+        @include opacity(0.95);
+    }
 
 	input.tiny {
 		width: 20px;

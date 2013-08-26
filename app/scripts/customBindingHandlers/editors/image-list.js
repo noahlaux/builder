@@ -41,7 +41,7 @@ define([
                 $target.parent().toggleClass( 'editing' );
 
                 $editElement
-                    .fadeToggle( 'fast' )
+                    .toggleClass( 'editing easeinout' )
                     .css({
                         top: $target.offset().top + 'px',
                         left: $target.offset().left + 'px'
