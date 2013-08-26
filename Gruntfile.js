@@ -245,6 +245,9 @@ module.exports = function (grunt) {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
+        },
+        livereload: {
+            port: 35728
         }
     });
 

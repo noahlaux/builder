@@ -7,7 +7,12 @@ define([
     'knockout',
     'knockout-mapping',
 
+    // Utils
     'utils/google-analytics',
+    'utils/ajax',
+
+    // Service providers
+    'serviceproviders/flickr',
 
     'viewModels/modules/image-list',
     'viewModels/modules/heading',
@@ -19,7 +24,7 @@ define([
     // Handlers
     'customBindingHandlers/editors'
 
-], function ( $, _, ko, mapping, GA, ImageList, Heading, Editors, defaultLayout ) {
+], function ( $, _, ko, mapping, GA, ajax, Flickr, ImageList, Heading, Editors, defaultLayout ) {
 
     'use strict';
 
@@ -48,10 +53,10 @@ define([
         defaultItemsPrRow: 4,
 
         /**
-         * [items description]
-         * @type {[type]}
+         * Modules
+         * @type {Array}
          */
-        items: ko.observableArray([]),
+        modules: ko.observableArray([]),
 
         /**
          * [showBoundingBoxes description]
@@ -75,12 +80,21 @@ define([
 
         /**
          * Bind available render types
+         * TODO make into plugin structure instead
          *
          * @type {Object}
          */
         renderTypes: {
             'imageList': ImageList,
             'heading': Heading
+        },
+
+        /*
+         * Declare service providers
+         * @type {Object}
+         */
+        serviceProviders: {
+            'Flickr': new Flickr({ 'api_key': 'da430e07b1a66e95b9fede7896098d99' })
         },
 
         /**
@@ -91,7 +105,7 @@ define([
 
             var self = this;
 
-            this.$el = $( this.el );
+            self.$el = $( self.el );
 
             // Required for drag and drop access
             $.event.props.push( 'dataTransfer' );
@@ -99,9 +113,9 @@ define([
             // Setup google analytics
             GA({ account: null });
 
-            this.$el.parent().append( $('<div class="dragGhostContainer" />') );
+            self.$el.parent().append( $('<div class="dragGhostContainer" />') );
 
-            this.isDragging.subscribe( function( value ) {
+            self.isDragging.subscribe( function( value ) {
 
                 var $layout       = self.$el.find('.layout'),
                     $placeholders = $layout.find( '.placeholder' );
@@ -116,29 +130,12 @@ define([
             });
 
             // Load data from server
-            this.load({
-                    url:'data/test.json'
-                })
-                .done( $.proxy( this.renderLayout, this ) );
+            ajax.fetch('data/test.json')
+                .done( $.proxy( self.renderLayout, self ) );
 
             //var bindings = $.extend({}, imageList, imageList2, { app: app } );
 
             //ko.applyBindings( bindings );
-
-        },
-
-        /**
-         * [load description]
-         * @return {[type]} [description]
-         */
-        load: function( options ) {
-
-            return $.ajax({
-                url: options.url,
-                error: function( err ) {
-                    throw( err );
-                }
-            }).promise();
 
         },
 
@@ -156,29 +153,57 @@ define([
             this.$el.html( $layout );
 
             // Layout could have knockout sweetness applied to app
+            // TODO doesn't seem to work?
             ko.applyBindings( self, $layout[ 0 ] );
 
-            // Render all modules
-            var items = _.map( data.items, function( item ) {
-                return self.parseRenderType( item );
-            });
+            // Store all modules for later manipulation and CRUD operations
+            self.modules( self.renderModules( data.items ) );
 
             // Make placeholders droppable
             this.makeDroppable( this.$el.find( '.placeholder' ) );
 
-            // Store all modules for later manipulation and CRUD operations
-            self.items( items );
-
             $('#getData').on('click', function( e ) {
 
-                var data = $.map( self.items(), function( item ) {
-                    return item.data;
+                var data = $.map( self.modules(), function( module ) {
+                    return module.data;
                 });
 
                 console.log( $.parseJSON( mapping.toJSON( data ) ) );
             });
         },
 
+        /**
+         * Render all modules
+         * @param  {Array} modules
+         * @return {Array}
+         */
+        renderModules: function ( modules ) {
+            var self = this;
+            return _.map( modules, function( module ) {
+                return self.parseRenderType( module );
+            });
+
+        },
+
+        /**
+         * [parseRenderType description]
+         * @param  {Object} module [description]
+         * @return {Object}
+         */
+        parseRenderType: function( module ) {
+
+            if ( !this.renderTypes[ module.type ] ) {
+                throw('RenderType "' + module.type + '" is not defined/loaded');
+            }
+
+            return new this.renderTypes[ module.type ]( module, { app: this } );
+        },
+
+        /**
+         * [ description]
+         * @param  {[type]} $elements [description]
+         * @return {[type]}           [description]
+         */
         makeDroppable: function( $elements ) {
 
             var self                = this,
@@ -253,7 +278,6 @@ define([
                 placeholderTarget   = e.currentTarget,
                 targetIndex         = $('.placeholder').index( placeholderTarget );
 
-
             draggedViewModel.data.el( '.placeholder:eq(' + targetIndex + ')' );
 
             //$( placeholderTarget ).append( draggedTarget );
@@ -267,20 +291,6 @@ define([
             return false;
         },
 
-        /**
-         * [parseRenderType description]
-         * @param  {Object} item [description]
-         * @return {Object}
-         */
-        parseRenderType: function( item ) {
-
-            if ( this.renderTypes[ item.type ] ) {
-                return new this.renderTypes[ item.type ]( item, { app: this } );
-            } else {
-                throw('No RenderType "' + item.type + '" is defined in app');
-            }
-
-        }
     };
 
     return app;

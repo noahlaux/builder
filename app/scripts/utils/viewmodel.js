@@ -76,8 +76,8 @@ define([
 
             if ( this.$el ) {
 
-                var $element    = this.$el.eq( 0 ),
-                    $module     = $( this.template );
+                var $element = this.$el.eq( 0 ),
+                    $module  = $( this.template );
 
                 $element.append( $module );
 
@@ -119,7 +119,9 @@ define([
                                 height: $element.height()
                             });
 
-                        $('.dragGhostContainer').html( $placeHolderClone ).show();
+                        $('.dragGhostContainer')
+                            .html( $placeHolderClone )
+                            .show();
 
                         var x = $placeHolderClone.width() / 3.2,
                             y = $placeHolderClone.height() / 3;

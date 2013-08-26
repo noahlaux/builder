@@ -16,7 +16,6 @@ define([
     'knockout-mapping',
 
     'utils/viewmodel',
-    'utils/flickr',
 
     // templates
     'text!templates/modules/image-list.html',
@@ -26,7 +25,7 @@ define([
     'customBindingHandlers/fadeInOnPreload',
     'customBindingHandlers/getSpan'
 
-], function( $ , _, ko, mapping, ViewModel, Flickr, imageList, imageListItem ) {
+], function( $ , _, ko, mapping, ViewModel, imageList, imageListItem ) {
 
     'use strict';
 
@@ -60,32 +59,16 @@ define([
             showTitle: true,
 
             /**
-             * Array of items used as dataprovider
-             * @type {Array}
-             */
-            items: [],
-
-            /**
              * [showImageList description]
              * @type {Boolean}
              */
             showImageList: true,
 
             /**
-             * Available options per page to chose from (1 - 30)
+             * Array of items used as dataprovider
              * @type {Array}
              */
-            itemsPrPageOptions: (function() {
-
-                var options = [];
-
-                for ( var i = 1; i < 31; i++ ) {
-                    options.push( i );
-                }
-
-                return options;
-
-            })(),
+            items: [],
 
             /**
              * Items to retreave from server to do pagination
@@ -133,19 +116,19 @@ define([
              * Available image services
              * @type {Object}
              */
-            imageServices: {
-
-                /**
-                 * Contains named options to user
-                 * @type {Array}
-                 */
-                options: [ 'flickr' ],
+            serviceProvider: {
 
                 /**
                  * Currently selected image service provider
                  * @type {String}
                  */
-                selected: 'flickr'
+                selected: 'Flickr',
+
+                /**
+                 * Currently selected method
+                 * @type {String}
+                 */
+                method: 'search'
             },
 
             /**
@@ -188,20 +171,32 @@ define([
          * [init description]
          * @return {[type]} [description]
          */
-        initialize: function( options ) {
+        initialize: function( data, options ) {
 
             var self        = this,
-                fetchProxy  = $.proxy( this.fetch, this );
+                fetchProxy  = $.proxy( self.fetch, self );
 
             // Refecth if fields change
             // TODO could be made more modular and smart? and should'nt be cloned, but defaults are overwritten
+            self.data = mapping.fromJS( _.defaults( data, self.defaults ) );
 
-            this.data = mapping.fromJS( this.defaults );
+            /**
+             * Service providers
+             * @return {Array}
+             */
+            self.data.serviceProviders = _.filter( self.app.serviceProviders, function( provider ) {
+                return provider.type === 'image';
+            }).map( function ( provider) {
+                return provider.name;
+            });
 
-            // Mapping data from app
-            mapping.fromJS( options, this.data );
+            /**
+             * Available options per page to chose from (1 - 30)
+             * @type {Array}
+             */
+            self.data.itemsPrPageOptions = _.range( 1, 31 );
 
-            _.each( this.refetchOn, function( item ) {
+            _.each( self.refetchOn, function( item ) {
 
                 // Handle local variable subscriptions
                 if ( item.substring( 0, 4 ) === 'this' ) {
@@ -209,11 +204,10 @@ define([
                     eval( 'self.' + item.substr( 5 ) ).subscribe( fetchProxy );
                 }
 
-            }, this );
+            }, self );
 
-            this.fetch();
-
-            this.render();
+            self.fetch()
+                .render();
 
         },
 
@@ -221,7 +215,7 @@ define([
             'this.data.search',
             'this.data.itemsPrPage',
             'this.data.currentPage',
-            'this.data.imageServices.selected'
+            'this.data.serviceProvider.selected'
         ],
 
         /**
@@ -245,32 +239,29 @@ define([
          */
         fetch: function() {
 
-            var self = this;
+            var self            = this,
+                selected        = self.data.serviceProvider.selected(),
+                method          = self.data.serviceProvider.method(),
+                serviceProvider = self.app.serviceProviders[ selected ];
 
-            this.data.isFetching( true );
-
-            // fetch data from the selected image provider
-            if ( self.methodBindings[ this.data.imageServices.selected() ] ) {
-
-                var serviceProvider = self.methodBindings[ this.data.imageServices.selected() ];
-
-                serviceProvider.search( mapping.toJS( self.data ), function( items ) {
-                    self.data.isFetching( false );
-                    self.data.items( items );
-                });
-
-            } else {
-                throw( 'image service provider: ' + this.data.imageServices.selected() + ' does not exists' );
+            if ( !serviceProvider ) {
+                throw( 'service provider: ' + selected + ' does not exists' );
             }
 
-        },
+            if ( !serviceProvider[ method ] ) {
+                throw( 'service provider: ' + selected + ' does not have method: ' + method );
+            }
 
-        /**
-         * Bind the name to the service provider class module
-         * @type {Object}
-         */
-        methodBindings: {
-            'flickr': new Flickr({ 'api_key': 'da430e07b1a66e95b9fede7896098d99' })
+            self.data.isFetching( true );
+
+            // fetch data from the selected image provider
+            serviceProvider[ method ]( mapping.toJS( self.data ), function( items ) {
+                self.data.isFetching( false );
+                self.data.items( items );
+            });
+
+            return this;
+
         }
     });
 

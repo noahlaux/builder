@@ -1,10 +1,12 @@
-@import 'slate/variables';
+//@import 'slate/variables';
+//@import 'flat-ui/flat-ui.css';
 
 @import 'sass-bootstrap/lib/bootstrap';
 @import 'sass-bootstrap/lib/responsive';
 @import "compass/css3";
 
-@import 'slate/bootswatch';
+//@import 'slate/bootswatch';
+
 
 @import 'modules/standard';
 @import 'modules/transitions';

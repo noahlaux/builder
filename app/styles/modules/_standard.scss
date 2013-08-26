@@ -11,7 +11,7 @@
 
 		&.drag-over {
 			@include transform(#{scale(1) !important});
-			border: 2px solid green !important;
+			border: 3px solid green !important;
 			@include border-radius(3px);
 		}
 
@@ -20,23 +20,43 @@
 		}
 
 		&.bounding-placeholder {
-			border: 1px dashed green;
-			@include transform(scale(0.95));
+			border: 3px dashed green;
+			@include transform(scale(1));
 			//@include box-shadow(-1px 2px 10px 0px rgba(0, 0, 0, 0.3));
 		}
 	}
 }
 
+.layout {
+	@include backface-visibility(hidden);
+
+    &.dragging {
+		@include transform(scale(0.6));
+
+        .module {
+			border: 5px solid #274257;
+			margin: 10px;
+			padding: 5px;
+			@include opacity(0.2);
+
+			.edit-button {
+				display: none;
+			}
+		}
+
+	}
+}
+
 [draggable] {
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 [draggable=true] {
-	-khtml-user-drag: element;
-	cursor: move;
+    -khtml-user-drag: element;
+    cursor: move;
 }
 /**
  * Module image-list
@@ -44,45 +64,29 @@
 
 
 // .content {
-// 	position: absolute;
-// 	top: 0;
-// 	bottom: 0;
-// 	overflow: auto;
+//  position: absolute;
+//  top: 0;
+//  bottom: 0;
+//  overflow: auto;
 // }
 
 // .editors {
-// 	position: relative;
-// 	overflow: hidden;
-// 	position: absolute;
-// 	right: $fluidGridGutterWidth / 2;
-// 	bottom: 0;
-// 	top: 0;
-// 	> .wrapper {
-// 		position: absolute;
-// 		top: 0;
-// 		left: 0;
-// 		right: 0;
-// 		bottom: 0;
-// 		overflow: auto;
-// 	}
+//  position: relative;
+//  overflow: hidden;
+//  position: absolute;
+//  right: $fluidGridGutterWidth / 2;
+//  bottom: 0;
+//  top: 0;
+//  > .wrapper {
+//      position: absolute;
+//      top: 0;
+//      left: 0;
+//      right: 0;
+//      bottom: 0;
+//      overflow: auto;
+//  }
 // }
 //
-.layout {
-	@include backface-visibility(hidden);
-	&.dragging {
-
-		@include transform(scale(0.6));
-		.module {
-			border: 5px solid brown;
-			margin: 10px;
-			padding: 5px;
-			@include opacity(0.2);
-			.edit-button {
-				display: none;
-			}
-		}
-	}
-}
 
 
 .item {
