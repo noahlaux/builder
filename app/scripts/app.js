@@ -14,8 +14,8 @@ define([
     // Service providers
     'serviceproviders/flickr',
 
-    'viewModels/modules/image-list',
-    'viewModels/modules/heading',
+    'modules/image-list/image-list',
+    'modules/heading/heading',
     'viewModels/editors',
 
     // Layouts
