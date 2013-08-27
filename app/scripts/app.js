@@ -14,8 +14,7 @@ define([
     // Service providers
     'serviceproviders/flickr',
 
-    'modules/image-list/image-list',
-    'modules/heading/heading',
+    // Modules
     'viewModels/editors',
 
     // Layouts
@@ -24,7 +23,7 @@ define([
     // Handlers
     'customBindingHandlers/editors'
 
-], function ( $, _, ko, mapping, GA, ajax, Flickr, ImageList, Heading, Editors, defaultLayout ) {
+], function ( $, _, ko, mapping, GA, ajax, Flickr, Editors, defaultLayout ) {
 
     'use strict';
 
@@ -84,10 +83,7 @@ define([
          *
          * @type {Object}
          */
-        renderTypes: {
-            'imageList': ImageList,
-            'heading': Heading
-        },
+        renderTypes: {},
 
         /*
          * Declare service providers
@@ -101,11 +97,13 @@ define([
          * [init description]
          * @return {[type]} [description]
          */
-        init: function() {
+        init: function( options ) {
 
             var self = this;
 
             self.$el = $( self.el );
+
+            self.renderTypes = options.modules || {};
 
             // Required for drag and drop access
             $.event.props.push( 'dataTransfer' );
@@ -113,6 +111,8 @@ define([
             // Setup google analytics
             GA({ account: null });
 
+            // Make ghost container
+            // TODO find a better solution
             self.$el.parent().append( $('<div class="dragGhostContainer" />') );
 
             self.isDragging.subscribe( function( value ) {

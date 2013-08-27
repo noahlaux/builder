@@ -23,13 +23,23 @@ require([
 
     'app',
     'jquery',
+
+    // Modules
+    'modules/heading/heading',
+    'modules/image-list/image-list',
     'bootstrap',
     'utils/stringTemplates'
 
-], function ( app, $ ) {
+], function ( app, $, Heading, ImageList ) {
 
     'use strict';
 
-    app.init();
+    app.init({
+        container: '.app',
+        modules: {
+            'heading': Heading,
+            'imageList': ImageList
+        }
+    });
 
 });
