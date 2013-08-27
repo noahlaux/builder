@@ -1,0 +1,6 @@
+<li class="item easein" data-bind="css: $root.getSpan($index())">
+    <a data-bind="attr: { href: link }" target="_blank" class="thumbnail">
+        <img data-bind="attr: { src: imageUrl }" />
+        <h3 data-bind="text: title, visible: $root.showCaptions() && title !=''"></h3>
+    </a>
+</li>

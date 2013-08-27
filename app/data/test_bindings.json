@@ -1,0 +1,43 @@
+{
+	"layout": "default",
+	"items": [
+		{
+			"type": "heading",
+			"el": ".placeholder:eq(1)",
+            "fields": {
+                "text": "Hey you",
+                "show": 1
+            }
+		},
+		{
+		    "type": "imageList",
+		    "el": ".placeholder:eq(1)",
+            "fields": {
+    		    "search": "Goat",
+    		    "title": "Finding the goats",
+    		    "itemsPrRow": 1,
+    		    "itemsPrPage": 1,
+    		    "showCaptions": false,
+    		    "showPagination": false,
+                "items": {
+                    "data": "dynamicData.images.items",
+                    "fields": {
+                        "title": "{title}",
+                        "imageUrl": "{imageUrl}",
+                        "link": "{link}"
+                    }
+                }
+            },
+            "dynamicData": {
+                "images": {
+                    "type": "serviceprovider.flickr",
+                    "fields": {
+                        "search": "{fields.search}",
+                        "itemsPrRow": "{fields.itemsPrRow}",
+                        "itemsPrPage": "{fields.itemsPrPage}"
+                    }
+                }
+            }
+		}
+    ]
+}
