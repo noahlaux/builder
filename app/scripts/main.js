@@ -15,6 +15,9 @@ require.config({
         },
         'underscore': {
             exports: '_'
+        },
+        knockout: {
+            exports: 'ko'
         }
     }
 });

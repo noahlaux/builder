@@ -53,7 +53,7 @@ define([
          *
          * @type {String}
          */
-        url: 'http://api.flickr.com/services/rest/?jsoncallback=?',
+        url: 'https://api.flickr.com/services/rest/?jsoncallback=?',
 
         /**
          * Default settings

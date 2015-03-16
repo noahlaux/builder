@@ -11,7 +11,7 @@
 
 		&.drag-over {
 			@include transform(#{scale(1) !important});
-			border: 3px solid green !important;
+			outline: 3px solid green !important;
 			@include border-radius(3px);
 		}
 
@@ -20,7 +20,7 @@
 		}
 
 		&.bounding-placeholder {
-			border: 3px dashed green;
+			outline: 3px dashed green;
 			@include transform(scale(1));
 			//@include box-shadow(-1px 2px 10px 0px rgba(0, 0, 0, 0.3));
 		}
@@ -34,8 +34,8 @@
 		@include transform(scale(0.6));
 
         .module {
-			border: 5px solid #274257;
-			margin: 10px;
+			outline: 5px solid #274257;
+			margin: 20px;
 			padding: 5px;
 			@include opacity(0.2);
 
@@ -211,6 +211,7 @@
 	}
 
 	&:hover {
+        outline: 1px dashed rgba(0, 0, 0, 0.5);
 		.edit-button {
 			@include opacity(1);
 			//display: block;

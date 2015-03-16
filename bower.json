@@ -5,7 +5,11 @@
     "sass-bootstrap": "~2.3.0",
     "requirejs": "~2.1.4",
     "modernizr": "~2.6.2",
-    "jquery": "~1.9.1"
+    "jquery": "~1.9.1",
+    "knockout": "~2.2.1",
+    "knockout-mapping": "~2.4.1",
+    "requirejs-text": "~2.0.14",
+    "underscore": "~1.8.2"
   },
   "devDependencies": {}
 }

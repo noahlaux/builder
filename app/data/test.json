@@ -1,33 +1,33 @@
 {
 	"layout": "default",
 	"items": [
+        {
+            "type": "imageList",
+            "el": ".placeholder:eq(0)",
+            "search": "Goats",
+            "title": "Finding the goats",
+            "itemsPrRow": 1,
+            "itemsPrPage": 1,
+            "showCaptions": false,
+            "showPagination": false
+        },
+        {
+            "type": "imageList",
+            "el": ".placeholder:eq(0)",
+            "search": "Moon",
+            "title": "Man on the moon",
+            "itemsPrRow": 3,
+            "itemsPrPage": 9
+        },
 		{
 			"type": "heading",
 			"el": ".placeholder:eq(1)",
 			"text": "Hello world",
 			"show": true
 		},
-		{
+        {
 		    "type": "imageList",
 		    "el": ".placeholder:eq(1)",
-		    "search": "Goats",
-		    "title": "Finding the goats",
-		    "itemsPrRow": 1,
-		    "itemsPrPage": 1,
-		    "showCaptions": false,
-		    "showPagination": false
-		},
-		{
-		    "type": "imageList",
-		    "el": ".placeholder:eq(1)",
-		    "search": "Moon",
-		    "title": "Man on the moon",
-		   	"itemsPrRow": 3,
-		    "itemsPrPage": 9
-		},
-		{
-		    "type": "imageList",
-		    "el": ".placeholder:eq(2)",
 		    "search": "Dosis",
 		    "title": "Dosis",
 		   	"itemsPrRow": 3,
@@ -37,7 +37,7 @@
 		},
 		{
 		    "type": "imageList",
-		    "el": ".placeholder:eq(2)",
+		    "el": ".placeholder:eq(1)",
 		    "search": "Swine",
 		    "title": "Yes",
 		   	"itemsPrRow": 3,
