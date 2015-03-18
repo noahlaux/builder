@@ -94,7 +94,7 @@ define([
             //3b6a149c5134322e51adf74d4336d5cd
             //8655c21a10049e5b06ea18df2cf6ba15
 
-            'Flickr': new Flickr({ 'api_key': '3b6a149c5134322e51adf74d4336d5cd' })
+            'Flickr': new Flickr({ 'api_key': '8655c21a10049e5b06ea18df2cf6ba15' })
         },
 
         /**

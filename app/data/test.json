@@ -4,7 +4,7 @@
         {
             "type": "imageList",
             "el": ".placeholder:eq(0)",
-            "search": "Goats",
+            "search": "Penguin",
             "title": "Finding the goats",
             "itemsPrRow": 1,
             "itemsPrPage": 1,
